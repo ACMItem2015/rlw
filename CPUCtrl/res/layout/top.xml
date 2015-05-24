@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:background="@drawable/bar" >
+    <ImageButton 
+        android:id="@+id/imagebutton_actionbar"
+        android:src="@drawable/back_a"
+        android:background="#00ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView 
+        android:id="@+id/textview_actionbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingRight="30dp"
+        android:textColor="#ffffff"
+        android:text="请添加" />
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<main>
+    
+    <performance_model>
+        <pname>com.batteryacid.jamcity</pname>
+        <pname>com.aatt.fpsm</pname>
+        <pname>com.ketchapp.jellyjump</pname>
+        <pname>com.rgy.tlrobot</pname>
+    </performance_model>
+    
+    <powersave_model>
+        <pname>com.rgy.root</pname>
+        <pname>com.UCMobile</pname>
+        <pname>com.rgy.catchdata</pname>
+    </powersave_model>
+    
+</main>

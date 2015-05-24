@@ -1,0 +1,160 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:scrollbars="vertical"
+    android:orientation="vertical"
+    >
+    
+   <!-- <TextView 
+        android:layout_width="fill_parent"
+ 		android:layout_height="wrap_content"
+ 		android:gravity="center"
+ 		android:paddingTop="15dip"
+ 		android:paddingBottom="15dip"
+		android:text="APP信息"
+		android:textSize="25sp"
+		android:background="@drawable/panel_bg"
+        /> --> 
+
+    <com.wyx.setcpuui.ActionBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+    
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_margin="30dp"
+	    android:orientation="vertical">
+        
+        <LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal" >
+    
+		    <ImageView 
+		        android:id="@+id/app_icon"
+		        android:layout_width="80dp"
+		        android:layout_height="80dp"
+		        android:layout_marginRight="10dp"
+		        />
+		    
+		    <LinearLayout 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical"
+		        >
+		        
+		        <com.rgy.widget.MyTextView
+			        android:id="@+id/app_name"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#000"
+			        android:textSize="25sp"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginBottom="5dp"
+					
+					android:singleLine="true"
+					android:ellipsize="marquee"
+		        	/>
+		        
+		        <com.rgy.widget.MyTextView 
+			        android:id="@+id/package_name"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textSize="20sp"
+			        android:textColor="#aaa"
+			        
+			        android:singleLine="true"
+					android:ellipsize="marquee"
+		        	/>	
+		        
+		    </LinearLayout>
+	
+		</LinearLayout>
+		
+   	
+	   	<TextView 
+	   	    android:id="@+id/version_name"
+	        android:layout_width="fill_parent"
+	 		android:layout_height="wrap_content"
+	 		android:paddingTop="25dp"
+	 		android:paddingBottom="15dp"
+			android:textSize="22sp"
+	        />
+	   	
+	   	<TextView 
+	   	    android:id="@+id/model"
+	        android:layout_width="fill_parent"
+	 		android:layout_height="wrap_content"
+	 		android:paddingTop="15dp"
+	 		android:paddingBottom="15dp"
+			android:textSize="22sp"
+	        />
+	   	
+	   	
+	   	<LinearLayout 
+		        android:layout_width="wrap_content"
+		        android:layout_height="fill_parent"
+		        android:orientation="vertical"
+		        android:layout_gravity="center"
+		        android:layout_marginTop="30dp"
+		        >
+	   	
+		   	<TextView 
+		   	    android:id="@+id/tip"
+		        android:layout_width="fill_parent"
+		 		android:layout_height="wrap_content"
+		 		android:gravity="center"
+		 		android:paddingBottom="15dp"
+				android:text="添加到cpu模式列表："
+				android:textSize="25sp"
+		        />
+		   	
+		   	<com.rgy.widget.MyImageView
+		        android:id="@+id/default_model"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="5dp"
+		        android:layout_gravity="center"
+		        android:scaleType="matrix"
+		        android:src="@drawable/defaultmodel2" />
+		   	
+		   	<com.rgy.widget.MyImageView
+		        android:id="@+id/performance_model"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="5dp"
+		        android:layout_gravity="center"
+		        android:scaleType="matrix"
+		        android:src="@drawable/performance2" />
+		   	
+		   	<com.rgy.widget.MyImageView
+		        android:id="@+id/powersave_model"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="5dp"
+		        android:layout_gravity="center"
+		        android:scaleType="matrix"
+		        android:src="@drawable/powersave2" />
+		   	
+		   	<com.rgy.widget.MyImageView
+		        android:id="@+id/go_back"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="5dp"
+		        android:layout_gravity="center"
+		        android:scaleType="matrix"
+		        android:src="@drawable/go_back" />
+		 
+		</LinearLayout>   		
+        
+    </LinearLayout>
+    
+         
+</LinearLayout>
+
+
+
+

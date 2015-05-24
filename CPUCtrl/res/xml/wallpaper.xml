@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:thumbnail="@drawable/logo_icon" 
+/>
+<!--  android:thumbnail是设置动态壁纸小图标的-->

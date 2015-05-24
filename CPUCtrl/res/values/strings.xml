@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CPUCtrl</string>
+    <string name="exit">退出</string>
+    
+    <string name="hello_world">获取中…</string>
+    <string name="photo">photo</string>
+    <string name="description1">description1</string>
+    <string name="description2">description2</string>
+    <string name="confirm">confirm</string>
+
+</resources>
