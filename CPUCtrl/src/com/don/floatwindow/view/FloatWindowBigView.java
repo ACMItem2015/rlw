@@ -36,11 +36,11 @@ public class FloatWindowBigView extends LinearLayout {
 	public static int viewHeight;
 
 	private View view;
-	private ImageView moren, jisu, shengdian;
-	
+	private ImageView moren, jisu, shengdian, yonghu, zidingyi, zhineng;
+
 	ProgressDialog dialog;
 	MyApplication myApp;
-	
+
 	Context context;
 
 	public FloatWindowBigView(final Context context) {
@@ -48,7 +48,7 @@ public class FloatWindowBigView extends LinearLayout {
 		LayoutInflater.from(context).inflate(R.layout.float_window_big, this);
 
 		this.context = context;
-		
+
 		initView();
 		recordDatas();
 
@@ -68,13 +68,30 @@ public class FloatWindowBigView extends LinearLayout {
 		animScaleMoRen.setFillAfter(false);
 		animScaleMoRen.setDuration(500);
 
+		Animation animScaleZhiNeng = new ScaleAnimation(0f, 1f, 0f, 1f, 50f,
+				50f);
+		animScaleZhiNeng.setFillAfter(false);
+		animScaleZhiNeng.setDuration(300);
+
+		Animation animScaleZiDingYi = new ScaleAnimation(0f, 1f, 0f, 1f, 50f,
+				50f);
+		animScaleZiDingYi.setFillAfter(false);
+		animScaleZiDingYi.setDuration(900);
+
+		Animation animScaleYongHu = new ScaleAnimation(0f, 1f, 0f, 1f, 50f, 50f);
+		animScaleYongHu.setFillAfter(false);
+		animScaleYongHu.setDuration(1100);
+
 		Animation animScaleJiSu = new ScaleAnimation(0f, 1f, 0f, 1f, 50f, 50f);
 		animScaleJiSu.setFillAfter(false);
-		animScaleJiSu.setDuration(300);
+		animScaleJiSu.setDuration(1300);
 
 		jisu.startAnimation(animScaleJiSu);
 		moren.startAnimation(animScaleMoRen);
 		shengdian.startAnimation(animScaleShengDian);
+		zidingyi.startAnimation(animScaleZiDingYi);
+		zhineng.startAnimation(animScaleZhiNeng);
+		yonghu.startAnimation(animScaleYongHu);
 
 		// Animation animGoUp = AnimationUtils.loadAnimation(context,
 		// R.anim.anim_translate_go_up);
@@ -100,9 +117,11 @@ public class FloatWindowBigView extends LinearLayout {
 				MyWindowManager.removeBigWindow(context);
 				try {
 					DeepCpuData.setCpuGovernor("userspace");
-					Toast.makeText(context, "默认模式设置成功", Toast.LENGTH_SHORT).show();
-					//dialog.show();
-					//new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_DEFAULT);
+					Toast.makeText(context, "默认模式设置成功", Toast.LENGTH_SHORT)
+							.show();
+					// dialog.show();
+					// new
+					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_DEFAULT);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -116,9 +135,11 @@ public class FloatWindowBigView extends LinearLayout {
 				MyWindowManager.removeBigWindow(context);
 				try {
 					DeepCpuData.setCpuGovernor("performance");
-					Toast.makeText(context, "极速模式设置成功", Toast.LENGTH_SHORT).show();
-//					dialog.show();
-//					new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_PERFORMANCE);
+					Toast.makeText(context, "极速模式设置成功", Toast.LENGTH_SHORT)
+							.show();
+					// dialog.show();
+					// new
+					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_PERFORMANCE);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -132,9 +153,65 @@ public class FloatWindowBigView extends LinearLayout {
 				MyWindowManager.removeBigWindow(context);
 				try {
 					DeepCpuData.setCpuGovernor("powersave");
-					Toast.makeText(context, "省电模式设置成功", Toast.LENGTH_SHORT).show();
-//					dialog.show();
-//					new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
+					Toast.makeText(context, "省电模式设置成功", Toast.LENGTH_SHORT)
+							.show();
+					// dialog.show();
+					// new
+					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		});
+		
+		// 点击自定义模式的时候切换省电模式，移除大悬浮窗，创建小悬浮窗
+		zidingyi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MyWindowManager.removeBigWindow(context);
+				try {
+					DeepCpuData.setCpuGovernor("powersave");
+					Toast.makeText(context, "自定义模式设置成功", Toast.LENGTH_SHORT)
+							.show();
+					// dialog.show();
+					// new
+					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		});
+		
+		// 点击用户模式的时候切换省电模式，移除大悬浮窗，创建小悬浮窗
+		yonghu.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MyWindowManager.removeBigWindow(context);
+				try {
+					DeepCpuData.setCpuGovernor("powersave");
+					Toast.makeText(context, "用户模式设置成功", Toast.LENGTH_SHORT)
+							.show();
+					// dialog.show();
+					// new
+					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		});
+		
+		// 点击智能模式的时候切换省电模式，移除大悬浮窗，创建小悬浮窗
+		zhineng.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MyWindowManager.removeBigWindow(context);
+				try {
+					DeepCpuData.setCpuGovernor("powersave");
+					Toast.makeText(context, "智能模式设置成功", Toast.LENGTH_SHORT)
+							.show();
+					// dialog.show();
+					// new
+					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -159,17 +236,20 @@ public class FloatWindowBigView extends LinearLayout {
 		moren = (ImageView) findViewById(R.id.moren);
 		jisu = (ImageView) findViewById(R.id.jisu);
 		shengdian = (ImageView) findViewById(R.id.shengdian);
-		//
+		zidingyi = (ImageView) findViewById(R.id.zidingyi);
+		zhineng = (ImageView) findViewById(R.id.zhineng);
+		yonghu = (ImageView) findViewById(R.id.yonghu);
 		dialog = new MyProgressDialog(context);
-		//myApp = (MyApplication) getApplication();
+		// myApp = (MyApplication) getApplication();
 	}
-	
+
 	/**
 	 * 异步任务设置cpu模式
+	 * 
 	 * @author Administrator
-	 *
+	 * 
 	 */
-	class AsyncTaskSetModel extends AsyncTask<String, Integer, String>{
+	class AsyncTaskSetModel extends AsyncTask<String, Integer, String> {
 		@Override
 		protected String doInBackground(String... params) {
 			String model = params[0];
@@ -178,46 +258,51 @@ public class FloatWindowBigView extends LinearLayout {
 			boolean flag1 = DeepCpuData.setMaxCpuFreq(max);
 			boolean flag2 = DeepCpuData.setMinCpuFreq(min);
 			boolean flag = false;
-			if(model.equals(MyConfig.CPUMODEL_POWERSAVE)){
+			if (model.equals(MyConfig.CPUMODEL_POWERSAVE)) {
 				flag = DeepCpuData.setCpuGovernor("powersave");
-			}else if(model.equals(MyConfig.CPUMODEL_PERFORMANCE)){
+			} else if (model.equals(MyConfig.CPUMODEL_PERFORMANCE)) {
 				flag = DeepCpuData.setCpuGovernor("performance");
-			}else if(model.equals(MyConfig.CPUMODEL_DEFAULT)){
+			} else if (model.equals(MyConfig.CPUMODEL_DEFAULT)) {
 				flag = DeepCpuData.setCpuGovernor("userspace");
 			}
-			
+
 			String result = "";
-			if(flag&&flag1&&flag2){
-				result = "ok"+model;
+			if (flag && flag1 && flag2) {
+				result = "ok" + model;
 			}
 			return result;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
-			if(result.equals("")){
-				Toast.makeText(context, "请先获取root权限", Toast.LENGTH_SHORT).show();
+			if (result.equals("")) {
+				Toast.makeText(context, "请先获取root权限", Toast.LENGTH_SHORT)
+						.show();
 				return;
 			}
 			Toast.makeText(context, "异步任务执行了", Toast.LENGTH_SHORT).show();
 			String state = result.substring(0, 2);
 			String model = result.substring(2);
 			String cpuModel_str = SmallUtils.convertCpuModelName(model);
-			if(state.equals("ok")){
+			if (state.equals("ok")) {
 				myApp.setCpuModel(model);
-				Toast.makeText(context, cpuModel_str+"设置成功", Toast.LENGTH_SHORT).show();
-				//关闭 智能模式 和 自定义模式
-				if(AppUtils.isServiceWork(context, MyConfig.SERVICENAME_SMARTY)){
+				Toast.makeText(context, cpuModel_str + "设置成功",
+						Toast.LENGTH_SHORT).show();
+				// 关闭 智能模式 和 自定义模式
+				if (AppUtils
+						.isServiceWork(context, MyConfig.SERVICENAME_SMARTY)) {
 					Intent intent = new Intent(context, SmartyService.class);
 					context.stopService(intent);
-				}else if(AppUtils.isServiceWork(context, MyConfig.SERVICENAME_CUSTOM)){
+				} else if (AppUtils.isServiceWork(context,
+						MyConfig.SERVICENAME_CUSTOM)) {
 					Intent intent = new Intent(context, CustomService.class);
 					context.stopService(intent);
 				}
-			}else{
-				Toast.makeText(context, cpuModel_str+"设置失败", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(context, cpuModel_str + "设置失败",
+						Toast.LENGTH_SHORT).show();
 			}
-			////
+			// //
 			super.onPostExecute(result);
 			dialog.dismiss();
 		}

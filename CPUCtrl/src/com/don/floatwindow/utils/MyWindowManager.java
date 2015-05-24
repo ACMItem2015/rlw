@@ -3,7 +3,6 @@ package com.don.floatwindow.utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 import com.rgy.setcpu.R;
 import com.don.floatwindow.view.FloatWindowBigView;
@@ -12,18 +11,13 @@ import com.don.floatwindow.view.FloatWindowRocketView2;
 import com.don.floatwindow.view.FloatWindowSmallView;
 
 import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.view.animation.Animation.AnimationListener;
+
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MyWindowManager {
 

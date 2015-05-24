@@ -48,6 +48,22 @@ public class SetActivity extends Activity {
 
 		// 生成简单适配器
 		initAdapter();
+		
+		// 控件操作
+		initEvent();
+	}
+
+	/**
+	 * 控件操作
+	 */
+	private void initEvent() {
+		tv_title.setText("悬浮窗设置");
+		back.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 
 	/**
@@ -78,18 +94,10 @@ public class SetActivity extends Activity {
 
 	private void initView() {
 		mListView = (ListView) findViewById(R.id.id_listview);
-		/**
-		 * 顶部panel
-		 */
+		 //******************* 顶部panel	*******************
 		tv_title = (TextView) findViewById(R.id.textview_actionbar);
-		tv_title.setText("悬浮窗设置");
 		back=(ImageButton) findViewById(R.id.imagebutton_actionbar);
-		back.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+		 //******************* 顶部panel	*******************
 	}
 
 }

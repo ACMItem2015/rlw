@@ -3,21 +3,17 @@ package com.don.floatwindow;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.rgy.Tools.GuardCpuData;
 import com.rgy.setcpu.MyApplication;
 import com.rgy.setcpu.R;
 import com.don.floatwindow.utils.MyWindowManager;
 
-
 import android.app.Service;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.TextView;
 
 public class FloatWindowService extends Service {
-	
 
 	/**
 	 * 用于在线程中创建或移除悬浮窗。
@@ -43,6 +39,7 @@ public class FloatWindowService extends Service {
 			timer = new Timer();
 			timer.scheduleAtFixedRate(new RefreshTask(), 0, 1000);
 		}
+
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -55,7 +52,7 @@ public class FloatWindowService extends Service {
 	}
 
 	class RefreshTask extends TimerTask {
-		
+
 		/**
 		 * 在任何app上运行的悬浮窗
 		 */

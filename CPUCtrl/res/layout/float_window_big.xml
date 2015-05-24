@@ -24,8 +24,32 @@
         android:id="@+id/jisu"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_x="85dp"
+        android:layout_y="420dp"
+        android:background="@drawable/floatbig22" />
+
+    <ImageView
+        android:id="@+id/yonghu"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_x="155dp"
+        android:layout_y="420dp"
+        android:background="@drawable/floatbig44" />
+
+    <ImageView
+        android:id="@+id/zhineng"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_x="225dp"
         android:layout_y="350dp"
-        android:background="@drawable/floatbig22" />
+        android:background="@drawable/floatbig55" />
+
+    <ImageView
+        android:id="@+id/zidingyi"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_x="225dp"
+        android:layout_y="420dp"
+        android:background="@drawable/floatbig66" />
 
 </AbsoluteLayout>
