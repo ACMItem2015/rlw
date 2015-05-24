@@ -20,8 +20,10 @@ import android.widget.Toast;
 
 import com.rgy.Tools.AppListAdapter;
 import com.rgy.Tools.AppUtils;
+import com.rgy.Tools.DeepCpuData;
 import com.rgy.Tools.FileUtils;
 import com.rgy.Tools.MyConfig;
+import com.rgy.Tools.SmallUtils;
 import com.rgy.entity.AppInfo;
 import com.rgy.widget.MyProgressDialog;
 import com.rgy.widget.SlidingMenu;
@@ -134,6 +136,7 @@ public class AppPerformanceActivity extends Activity {
 					Intent intent = new Intent(AppPerformanceActivity.this, CustomService.class);
 					startService(intent);
 					Toast.makeText(AppPerformanceActivity.this, "自定义模式已启动", Toast.LENGTH_SHORT).show();
+					MainActivity.tv_showmodel.setText("当前模式:\n"+ "自定义模式");// 修改主界面
 					myApp.setCustomSwitch("Start");
 					tv_switch.setText("停用自定义");
 					// 如果此时智能模式还处于开启状态，则关闭它
@@ -148,6 +151,7 @@ public class AppPerformanceActivity extends Activity {
 					Intent intent = new Intent(AppPerformanceActivity.this, CustomService.class);
 					stopService(intent);
 					Toast.makeText(AppPerformanceActivity.this, "自定义模式已停止", Toast.LENGTH_SHORT).show();
+					new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_DEFAULT);// 回到默认模式
 					myApp.setCustomSwitch("Stop");
 					tv_switch.setText("启动自定义");
 				}
@@ -280,6 +284,52 @@ public class AppPerformanceActivity extends Activity {
 			}
 		}
 		return appList;
+	}
+	
+	
+	class AsyncTaskSetModel extends AsyncTask<String, Integer, String>{
+		@Override
+		protected String doInBackground(String... params) {
+			String model = params[0];
+			long max = Long.parseLong(myApp.getcpuMaxFreq());
+			long min = Long.parseLong(myApp.getcpuMinFreq());
+			boolean flag1 = DeepCpuData.setMaxCpuFreq(max);
+			boolean flag2 = DeepCpuData.setMinCpuFreq(min);
+			boolean flag = false;
+			if(model.equals(MyConfig.CPUMODEL_POWERSAVE)){
+				flag = DeepCpuData.setCpuGovernor("powersave");
+			}else if(model.equals(MyConfig.CPUMODEL_PERFORMANCE)){
+				flag = DeepCpuData.setCpuGovernor("performance");
+			}else if(model.equals(MyConfig.CPUMODEL_DEFAULT)){
+				flag = DeepCpuData.setCpuGovernor("userspace");
+			}
+			
+			String result = "";
+			if(flag&&flag1&&flag2){
+				result = "ok"+model;
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			if(result.equals("")){
+				Toast.makeText(AppPerformanceActivity.this, "请先获取root权限", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			String state = result.substring(0, 2);
+			String model = result.substring(2);
+			String cpuModel_str = SmallUtils.convertCpuModelName(model);
+			if(state.equals("ok")){
+				myApp.setCpuModel(model);
+				MainActivity.tv_showmodel.setText("当前模式:\n"+ "默认模式");// 修改主界面
+				Toast.makeText(AppPerformanceActivity.this, cpuModel_str+"设置成功", Toast.LENGTH_SHORT).show();
+			}else{
+				Toast.makeText(AppPerformanceActivity.this, cpuModel_str+"设置失败", Toast.LENGTH_SHORT).show();
+			}
+			////
+			super.onPostExecute(result);
+		}
 	}
 
 }
