@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -122,7 +123,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(MainActivity.this, AppAllActivity.class);
 				startActivity(intent);
-				finish();
+				//finish();
 			}
 		});
 		
@@ -154,6 +155,7 @@ public class MainActivity extends Activity {
 					Toast.makeText(MainActivity.this, "智能模式已停止", Toast.LENGTH_SHORT).show();
 					myApp.setSmartySwitch("Stop");
 					//btn_smart.setImageResource(R.drawable.shut);
+					new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_DEFAULT);
 				}
 			}
 		});
@@ -176,6 +178,7 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		timer.cancel();
 		super.onDestroy();
+		System.out.println("MainActivity被销毁");
 	}
 	
 	@Override
@@ -187,6 +190,21 @@ public class MainActivity extends Activity {
 				break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		switch (keyCode) {
+		//------------------------------------------------------------
+		case KeyEvent.KEYCODE_BACK://返回键
+			finish();
+			break;
+			
+		default:
+			break;
+		}
+		return false;
 	}
 	
 	//接收msg

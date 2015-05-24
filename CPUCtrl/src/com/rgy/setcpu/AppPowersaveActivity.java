@@ -173,7 +173,7 @@ public class AppPowersaveActivity extends Activity {
 				data.putString("model", MyConfig.CPUMODEL_POWERSAVE);
 				intent.putExtras(data);
 				startActivity(intent);
-				//finish();
+				finish();
 			}
 		});
 		
@@ -189,14 +189,20 @@ public class AppPowersaveActivity extends Activity {
 	}
 	
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		System.out.println("AppPowersaveActivity被销毁");
+	}
+	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		
 		switch (keyCode) {
 		//------------------------------------------------------------
-		case KeyEvent.KEYCODE_BACK://返回键
+		case KeyEvent.KEYCODE_BACK://返回键	
+//			Intent intent = new Intent(AppPowersaveActivity.this, MainActivity.class);
+//			startActivity(intent);
 			finish();
-			Intent intent = new Intent(AppPowersaveActivity.this, MainActivity.class);
-			startActivity(intent);
 			break;
 			
 		default:

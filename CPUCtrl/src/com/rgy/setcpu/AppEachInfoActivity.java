@@ -110,6 +110,7 @@ public class AppEachInfoActivity extends Activity {
 		back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				goBack();
 				finish();
 			}
 		});
@@ -168,21 +169,17 @@ public class AppEachInfoActivity extends Activity {
 		btn_goback.setOnClickIntent(new MyImageView.OnViewClickListener() {
 			@Override
 			public void onViewClick(MyImageView view) {
-//				Intent intent = new Intent(AppEachInfoActivity.this,AppAllActivity.class);
-//				if(model.equals(MyConfig.CPUMODEL_DEFAULT)){
-//					intent = new Intent(AppEachInfoActivity.this,AppDefaultActivity.class);
-//				}else if(model.equals(MyConfig.CPUMODEL_PERFORMANCE)){
-//					intent = new Intent(AppEachInfoActivity.this,AppPerformanceActivity.class);
-//				}else if(model.equals(MyConfig.CPUMODEL_POWERSAVE)){
-//					intent = new Intent(AppEachInfoActivity.this,AppPowersaveActivity.class);
-//				}else if(model.equals("undefined")){
-//					intent = new Intent(AppEachInfoActivity.this,AppAllActivity.class);
-//				}
-//				startActivity(intent);
+				goBack();
 				finish();
 			}
 		});
 		
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		System.out.println("AppEachInfoActivity±»Ïú»Ù");
 	}
 	
 	@Override
@@ -191,6 +188,7 @@ public class AppEachInfoActivity extends Activity {
 		switch (keyCode) {
 		//------------------------------------------------------------
 		case KeyEvent.KEYCODE_BACK://·µ»Ø¼ü
+			goBack();
 			finish();
 			break;
 			
@@ -198,6 +196,20 @@ public class AppEachInfoActivity extends Activity {
 			break;
 		}
 		return false;
+	}
+	
+	private void goBack(){
+		Intent intent = new Intent(AppEachInfoActivity.this,AppAllActivity.class);
+		if(model.equals(MyConfig.CPUMODEL_DEFAULT)){
+			intent = new Intent(AppEachInfoActivity.this,AppDefaultActivity.class);
+		}else if(model.equals(MyConfig.CPUMODEL_PERFORMANCE)){
+			intent = new Intent(AppEachInfoActivity.this,AppPerformanceActivity.class);
+		}else if(model.equals(MyConfig.CPUMODEL_POWERSAVE)){
+			intent = new Intent(AppEachInfoActivity.this,AppPowersaveActivity.class);
+		}else if(model.equals("undefined")){
+			intent = new Intent(AppEachInfoActivity.this,AppAllActivity.class);
+		}
+		startActivity(intent);
 	}
 	
 }

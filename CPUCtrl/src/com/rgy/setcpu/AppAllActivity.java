@@ -170,7 +170,7 @@ public class AppAllActivity extends Activity {
 				data.putString("model", "undefined");
 				intent.putExtras(data);
 				startActivity(intent);
-				//finish();
+				finish();
 			}
 		});
 		
@@ -183,14 +183,20 @@ public class AppAllActivity extends Activity {
 	}
 	
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		System.out.println("AppAllActivity±»Ïú»Ù");
+	}
+	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		
 		switch (keyCode) {
 		//------------------------------------------------------------
 		case KeyEvent.KEYCODE_BACK://·µ»Ø¼ü
+//			Intent intent = new Intent(AppAllActivity.this, MainActivity.class);
+//			startActivity(intent);
 			finish();
-			Intent intent = new Intent(AppAllActivity.this, MainActivity.class);
-			startActivity(intent);
 			break;
 			
 		default:

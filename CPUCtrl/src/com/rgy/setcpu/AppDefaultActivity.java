@@ -173,7 +173,7 @@ public class AppDefaultActivity extends Activity {
 				data.putString("model", MyConfig.CPUMODEL_DEFAULT);
 				intent.putExtras(data);
 				startActivity(intent);
-				//finish();
+				finish();
 			}
 		});
 		
@@ -189,14 +189,20 @@ public class AppDefaultActivity extends Activity {
 	}
 	
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		System.out.println("AppDefaultActivity±»Ïú»Ù");
+	}
+	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		
 		switch (keyCode) {
 		//------------------------------------------------------------
 		case KeyEvent.KEYCODE_BACK://·µ»Ø¼ü
+//			Intent intent = new Intent(AppDefaultActivity.this, MainActivity.class);
+//			startActivity(intent);
 			finish();
-			Intent intent = new Intent(AppDefaultActivity.this, MainActivity.class);
-			startActivity(intent);
 			break;
 			
 		default:
