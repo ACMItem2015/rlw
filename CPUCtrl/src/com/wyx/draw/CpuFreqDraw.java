@@ -63,20 +63,18 @@ public class CpuFreqDraw extends WallpaperDraw{
     	linePaint.setAntiAlias(true);//设置平滑
     	
 		c.save();
-    	String data="";
+
     	Log.w("LiveWallpaper.Engine", "data = cpuFreqTask.get() before");
+		Log.w("LiveWallpaper.Engine", curCpuFreq);
 		
-		data = curCpuFreq;//GuardCpuData.getCurCpuFreq();//cpuFreqTask.getCurCpuFreq();
-		
-		Log.w("LiveWallpaper.Engine", data);
-    	String data1="CPU频率："+data+"KHz";
+		String data1="CPU频率："+curCpuFreq+"KHz";
     	//String data2="GPU频率："+GuardCpuData.getGpuCurFreq()+"KHz";//GPU数据
     	
-    	freqList.add(0,data);
+    	freqList.add(0,curCpuFreq);
     	
     	mPaint.setTextSize(25);
-        c.translate(0, 200);//可要可不要mCenterX,mCenterY
-        c.drawText(data1,0,0,mPaint);//????????????/
+        c.translate(0, 200);
+        c.drawText(data1,0,0,mPaint);
         //c.drawText(data2,0,30,mPaint);
         
         c.drawLine(0,40,0,height,mPaint);//360原来是freqH
