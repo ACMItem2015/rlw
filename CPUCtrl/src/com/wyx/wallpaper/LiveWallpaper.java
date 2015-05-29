@@ -2,6 +2,7 @@ package com.wyx.wallpaper;
 
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import android.content.Intent;
 import android.content.IntentFilter;
