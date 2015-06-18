@@ -95,7 +95,6 @@ public class FloatWindowSmallView extends LinearLayout {
 
 	}
 
-	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
@@ -114,14 +113,14 @@ public class FloatWindowSmallView extends LinearLayout {
 			yInScreen = event.getRawY() - getStatusBarHeight();
 			// 手指移动的时候更新小悬浮窗的位置
 			updateViewPosition();
-			// 如果手指移动悬浮窗低于底面某一高度时
-			if (mParams.y + (viewWidth) / 2 > (windowManager
-					.getDefaultDisplay().getHeight()) - 300) {
-				// 创建火箭动画
-				MyWindowManager.createRocketWindow1(getContext());
-			} else {
-				MyWindowManager.removeRocketWindow1(getContext());
-			}
+//			// 如果手指移动悬浮窗低于底面某一高度时
+//			if (mParams.y + (viewWidth) / 2 > (windowManager
+//					.getDefaultDisplay().getHeight()) - 300) {
+//				// 创建火箭动画
+//				MyWindowManager.createRocketWindow1(getContext());
+//			} else {
+//				MyWindowManager.removeRocketWindow1(getContext());
+//			}
 			break;
 		// ********************在这里添加手指拖动悬浮窗时的事件及动画效果****************************************
 
@@ -132,8 +131,8 @@ public class FloatWindowSmallView extends LinearLayout {
 				openBigWindow();
 			} else {
 				// 如果手指离开屏幕时，悬浮窗高于底面某一高度时
-				if (mParams.y + (viewWidth) / 2 < (windowManager
-						.getDefaultDisplay().getHeight()) - 300) {
+//				if (mParams.y + (viewWidth) / 2 < (windowManager
+//						.getDefaultDisplay().getHeight()) - 300) {
 					// 如果手指离开屏幕时，悬浮窗在屏幕右半边则贴右壁
 					if (mParams.x + (viewWidth) / 2 > (windowManager
 							.getDefaultDisplay().getWidth()) / 2) {
@@ -146,12 +145,12 @@ public class FloatWindowSmallView extends LinearLayout {
 						windowManager.updateViewLayout(this, mParams);
 						animJumpLeft();
 					}
-				} else {// 如果手指离开屏幕时，悬浮窗低于底面某一高度时
-					MyWindowManager.removeRocketWindow1(getContext());
-					MyWindowManager.createRocketWindow2(getContext());
-					MyWindowManager.reCreateSmallWindow(getContext());
-					
-				}
+//				} else {// 如果手指离开屏幕时，悬浮窗低于底面某一高度时
+//					MyWindowManager.removeRocketWindow1(getContext());
+//					MyWindowManager.createRocketWindow2(getContext());
+//					MyWindowManager.reCreateSmallWindow(getContext());
+
+//				}
 
 			}
 			// ********************在这里添加手指离开悬浮窗时的事件及动画效果****************************************
