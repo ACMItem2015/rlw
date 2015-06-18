@@ -81,10 +81,6 @@ public class CpuUsageView extends View {
 		int cpuUsage = Integer.parseInt(str_cpuUsage.substring(0, str_cpuUsage.length()-1));
 		System.out.println("cpu占用率："+cpuUsage);
 		int result=cpuUsage/10;
-
-		if(result<=1){//解决小于10，画出为空的情况
-			result=1;
-		}
 		
 		//使用Handler给MainActivity发送msg
 		Message msg=new Message();

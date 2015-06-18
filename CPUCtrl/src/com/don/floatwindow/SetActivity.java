@@ -26,7 +26,7 @@ public class SetActivity extends Activity {
 	private Map<String, Object> item;
 
 	// 模拟数据
-	private int image[] = { R.drawable.ic_launcher };
+//	private int image[] = { R.drawable.floatsmall };
 	private String description[] = { "开启悬浮窗" };
 	private int length = 1;
 	
@@ -71,9 +71,13 @@ public class SetActivity extends Activity {
 	 */
 	private void initAdapter() {
 		// 生成简单适配器
+//		MySimpleAdapter listAdapter = new MySimpleAdapter(this, data,
+//				R.layout.listview_item, new String[] { "photo", "description1" },
+//				new int[] { R.id.photo, R.id.description1 });
+		
 		MySimpleAdapter listAdapter = new MySimpleAdapter(this, data,
-				R.layout.listview_item, new String[] { "photo", "description1" },
-				new int[] { R.id.photo, R.id.description1 });
+				R.layout.set_item, new String[] { "description1" },
+				new int[] { R.id.description1 });
 
 		// 设置适配器
 		mListView.setAdapter(listAdapter);
@@ -86,7 +90,7 @@ public class SetActivity extends Activity {
 		data = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < length; i++) {
 			item = new HashMap<String, Object>();
-			item.put("photo", image[i]);
+//			item.put("photo", image[i]);
 			item.put("description1", description[i]);
 			data.add(item);
 		}

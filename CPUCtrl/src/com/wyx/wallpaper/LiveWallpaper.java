@@ -2,7 +2,6 @@ package com.wyx.wallpaper;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -25,6 +24,9 @@ import com.wyx.draw.TimeDraw;
 import com.wyx.util.BatteryChangeReceiver;
 
 public class LiveWallpaper extends WallpaperService {
+
+	private final Handler mHandler=new Handler();
+	private final Handler mHandlerTime=new Handler();
 	
 	@Override
 	public void onCreate() {
@@ -49,6 +51,20 @@ public class LiveWallpaper extends WallpaperService {
 	 *
 	 */
 	class LiveWallpaperEngine extends Engine{
+		//画桌面的线程
+		private final Runnable mRun=new Runnable() {
+			@Override
+			public void run() {
+				drawWallpaper();
+			}
+		};
+//		//画时间的线程
+//		private final Runnable mRunTime=new Runnable() {
+//			@Override
+//			public void run() {
+//				drawTime();
+//			}
+//		};
 		
 		private Paint mPaint=new Paint();
 		private Canvas c;
@@ -90,19 +106,13 @@ public class LiveWallpaper extends WallpaperService {
 			IntentFilter filter = new IntentFilter();//接听广播，开启
             filter.addAction(Intent.ACTION_BATTERY_CHANGED);
             registerReceiver(mBroadcastReceiver, filter);
-
-			timer.schedule(new TimerTask() {//开定时器刷新，解决跳秒问题！！！
-				@Override
-				public void run() {
-					drawWallpaper();//mHandler.post(mRun);mHandler貌似可以取消了
-				}
-			},0,1000);
             
 		}
 		
 		@Override
 		public void onSurfaceCreated(SurfaceHolder holder) {//创建的时候运行
 			super.onSurfaceCreated(holder);
+			//mHandler.removeCallbacks(mRun);
 			Log.w("LiveWallpaper.Engine", "onSurfaceCreated");
 		}
 		
@@ -119,6 +129,9 @@ public class LiveWallpaper extends WallpaperService {
 			super.onVisibilityChanged(visible);
 			if(visible){
 				drawWallpaper();
+				//drawTime();
+			}else{
+				mHandler.removeCallbacks(mRun);//将线程从线程队列中移除
 			}
 			Log.w("LiveWallpaper.Engine", "onVisibilityChanged");
 		}
@@ -126,6 +139,7 @@ public class LiveWallpaper extends WallpaperService {
 		@Override
 		public void onSurfaceDestroyed(SurfaceHolder holder) {
 			super.onSurfaceDestroyed(holder);
+			mHandler.removeCallbacks(mRun);//将线程从线程队列中移除
 			Log.w("LiveWallpaper.Engine", "onSurfaceDestroyed");
 			
 		}
@@ -133,6 +147,7 @@ public class LiveWallpaper extends WallpaperService {
 		@Override
 		public void onDestroy() {
 			super.onDestroy();
+			mHandler.removeCallbacks(mRun);//将线程从线程队列中移除
 			Log.w("LiveWallpaper.Engine", "onDestroy");
 			
 			unregisterReceiver(mBroadcastReceiver);//关闭广播
@@ -169,17 +184,34 @@ public class LiveWallpaper extends WallpaperService {
 					holder.unlockCanvasAndPost(c);
 				}
 			}
+			mHandler.postDelayed(mRun,1000);//将线程添加到线程队列中，一秒执行一次
 			Log.w("LiveWallpaper.Engine", "drawWallpaper");
 		}
 		
 		//绘制时间
 		void drawTime(){
+//			final SurfaceHolder holder = getSurfaceHolder();
+//			try{
+//				c=holder.lockCanvas();
+//				
+//				Resources res=getResources();
+//            	Bitmap bmp=BitmapFactory.decodeResource(res,R.drawable.wallpaper4);
+//            	c.drawBitmap(bmp,-50,-200,mPaint);//坐标需要算一算
+//				
+//            	if(c!=null){
 			if(timeDraw==null){
 				timeDraw=new TimeDraw(c, mPaint);
 				timeDraw.draw();
 			}else{
 				timeDraw.draw();
 			}
+//				}
+//			}finally{
+//				if(c!=null){
+//					holder.unlockCanvasAndPost(c);
+//				}
+//			}
+//			mHandler.postDelayed(mRunTime,0);
         }
         
 		//绘制CPU频率
