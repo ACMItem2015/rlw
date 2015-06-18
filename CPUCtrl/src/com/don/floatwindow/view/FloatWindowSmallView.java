@@ -150,6 +150,7 @@ public class FloatWindowSmallView extends LinearLayout {
 					MyWindowManager.removeRocketWindow1(getContext());
 					MyWindowManager.createRocketWindow2(getContext());
 					MyWindowManager.reCreateSmallWindow(getContext());
+					
 				}
 
 			}

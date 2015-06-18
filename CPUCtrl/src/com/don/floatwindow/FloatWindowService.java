@@ -3,15 +3,30 @@ package com.don.floatwindow;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.rgy.setcpu.MyApplication;
-import com.rgy.setcpu.R;
-import com.don.floatwindow.utils.MyWindowManager;
-
 import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.don.floatwindow.utils.MyWindowManager;
+import com.rgy.Tools.AppUtils;
+import com.rgy.Tools.DeepCpuData;
+import com.rgy.Tools.MyConfig;
+import com.rgy.Tools.SmallUtils;
+import com.rgy.setcpu.AppAllActivity;
+import com.rgy.setcpu.CustomService;
+import com.rgy.setcpu.MainActivity;
+import com.rgy.setcpu.ModelUserActivity;
+import com.rgy.setcpu.MyApplication;
+import com.rgy.setcpu.R;
+import com.rgy.setcpu.SmartyService;
 
 public class FloatWindowService extends Service {
 
@@ -26,6 +41,8 @@ public class FloatWindowService extends Service {
 	private Timer timer;
 
 	public static String resultCPU;
+	
+	MyApplication myApp;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -39,6 +56,10 @@ public class FloatWindowService extends Service {
 			timer = new Timer();
 			timer.scheduleAtFixedRate(new RefreshTask(), 0, 1000);
 		}
+		
+		myApp = (MyApplication) getApplication();
+		
+		MyWindowManager.createBigWindow(getApplicationContext());
 
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -52,7 +73,6 @@ public class FloatWindowService extends Service {
 	}
 
 	class RefreshTask extends TimerTask {
-
 		/**
 		 * 在任何app上运行的悬浮窗
 		 */
@@ -79,12 +99,164 @@ public class FloatWindowService extends Service {
 							TextView percentView = (TextView) MyWindowManager.smallWindow
 									.findViewById(R.id.percent);
 							percentView.setText(resultCPU);
+							//
+							
+						}
+						
+						if(MyWindowManager.bigWindow != null){
+							//极速
+							ImageView jisu = (ImageView)MyWindowManager.bigWindow
+									.findViewById(R.id.jisu);
+							jisu.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									MyWindowManager.removeBigWindow(getApplicationContext());
+									new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_PERFORMANCE);
+								}
+							});
+							//默认
+							ImageView moren = (ImageView)MyWindowManager.bigWindow
+									.findViewById(R.id.moren);
+							moren.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									MyWindowManager.removeBigWindow(getApplicationContext());
+									new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_DEFAULT);
+								}
+							});
+							//省电
+							ImageView shengdian = (ImageView)MyWindowManager.bigWindow
+									.findViewById(R.id.shengdian);
+							shengdian.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									MyWindowManager.removeBigWindow(getApplicationContext());
+									new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
+								}
+							});
+							//用户模式
+							ImageView yonghu = (ImageView)MyWindowManager.bigWindow
+									.findViewById(R.id.yonghu);
+							yonghu.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									MyWindowManager.removeBigWindow(getApplicationContext());
+									Intent intent = new Intent(FloatWindowService.this, ModelUserActivity.class);
+									intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+									startActivity(intent);
+								}
+							});
+							//智能模式
+							ImageView zhineng = (ImageView)MyWindowManager.bigWindow
+									.findViewById(R.id.zhineng);
+							zhineng.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									MyWindowManager.removeBigWindow(getApplicationContext());
+									//
+									String smartySwitch = myApp.getSmartySwitch();
+									if(smartySwitch.equals("Stop")){
+										Intent intent = new Intent(FloatWindowService.this, SmartyService.class);
+										startService(intent);
+										Toast.makeText(FloatWindowService.this, "智能模式已启动", Toast.LENGTH_SHORT).show();
+										myApp.setSmartySwitch("Start");
+										//判断MainActivity是否存在
+										if(MainActivity.tv_showmodel != null){
+											MainActivity.tv_showmodel.setText("当前模式:\n"+ "智能模式");
+										}
+										// 如果此时自定义模式还处于开启状态，则关闭它
+										String customSwitch = myApp.getCustomSwitch();
+										if(customSwitch.equals("Start")){
+											Intent customIntent = new Intent(FloatWindowService.this, CustomService.class);
+											stopService(customIntent);
+											//
+											myApp.setCustomSwitch("Stop");
+											//btn_custom.setImageResource(R.drawable.shut);
+										}
+									}else{
+										Intent intent = new Intent(FloatWindowService.this, SmartyService.class);
+										stopService(intent);
+										Toast.makeText(FloatWindowService.this, "智能模式已停止", Toast.LENGTH_SHORT).show();
+										myApp.setSmartySwitch("Stop");
+										//btn_smart.setImageResource(R.drawable.shut);
+										new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_DEFAULT);
+									}
+								}
+							});
+							//自定义模式
+							ImageView zidingyi = (ImageView)MyWindowManager.bigWindow
+									.findViewById(R.id.zidingyi);
+							zidingyi.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									MyWindowManager.removeBigWindow(getApplicationContext());
+									Intent intent = new Intent(FloatWindowService.this, AppAllActivity.class);
+									intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+									startActivity(intent);
+								}
+							});
 						}
 					}
 				});
 			}
 		}
 
+	}
+	
+	class AsyncTaskSetModel extends AsyncTask<String, Integer, String>{
+		@Override
+		protected String doInBackground(String... params) {
+			String model = params[0];
+			long max = Long.parseLong(myApp.getcpuMaxFreq());
+			long min = Long.parseLong(myApp.getcpuMinFreq());
+			boolean flag1 = DeepCpuData.setMaxCpuFreq(max);
+			boolean flag2 = DeepCpuData.setMinCpuFreq(min);
+			boolean flag = false;
+			if(model.equals(MyConfig.CPUMODEL_POWERSAVE)){
+				flag = DeepCpuData.setCpuGovernor("powersave");
+			}else if(model.equals(MyConfig.CPUMODEL_PERFORMANCE)){
+				flag = DeepCpuData.setCpuGovernor("performance");
+			}else if(model.equals(MyConfig.CPUMODEL_DEFAULT)){
+				flag = DeepCpuData.setCpuGovernor("userspace");
+			}
+			
+			String result = "";
+			if(flag&&flag1&&flag2){
+				result = "ok"+model;
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			if(result.equals("")){
+				Toast.makeText(FloatWindowService.this, "请先获取root权限", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			String state = result.substring(0, 2);
+			String model = result.substring(2);
+			String cpuModel_str = SmallUtils.convertCpuModelName(model);
+			if(state.equals("ok")){
+				myApp.setCpuModel(model);
+				Toast.makeText(FloatWindowService.this, cpuModel_str+"设置成功", Toast.LENGTH_SHORT).show();
+				//判断MainActivity是否存在
+				if(MainActivity.tv_showmodel != null){
+					MainActivity.tv_showmodel.setText("当前模式:\n"+ cpuModel_str);
+				}
+				//关闭 智能模式 和 自定义模式
+				if(AppUtils.isServiceWork(FloatWindowService.this, MyConfig.SERVICENAME_SMARTY)){
+					Intent intent = new Intent(FloatWindowService.this, SmartyService.class);
+					stopService(intent);
+				}else if(AppUtils.isServiceWork(FloatWindowService.this, MyConfig.SERVICENAME_CUSTOM)){
+					Intent intent = new Intent(FloatWindowService.this, CustomService.class);
+					stopService(intent);
+				}
+			}else{
+				Toast.makeText(FloatWindowService.this, cpuModel_str+"设置失败", Toast.LENGTH_SHORT).show();
+			}
+			////
+			super.onPostExecute(result);
+		}
 	}
 
 }

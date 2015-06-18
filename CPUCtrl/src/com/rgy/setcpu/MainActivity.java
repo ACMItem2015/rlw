@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 	
 	static Button btn_floatwin;//¿ªÆôÐü¸¡´°µÄ°´Å¥
 	TextView tv_showfreq;
-	static TextView tv_showmodel;
+	public static TextView tv_showmodel;
 	ImageButton btn_powersave,btn_performance,btn_defaultModel,btn_userModel;
 
 	ImageButton btn_custom, btn_smart;

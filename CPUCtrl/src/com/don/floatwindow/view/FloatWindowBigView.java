@@ -111,112 +111,112 @@ public class FloatWindowBigView extends LinearLayout {
 	private void initEvent(final Context context) {
 
 		// 点击默认模式的时候切换默认模式，移除大悬浮窗，创建小悬浮窗
-		moren.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				MyWindowManager.removeBigWindow(context);
-				try {
-					DeepCpuData.setCpuGovernor("userspace");
-					Toast.makeText(context, "默认模式设置成功", Toast.LENGTH_SHORT)
-							.show();
-					// dialog.show();
-					// new
-					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_DEFAULT);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		});
+//		moren.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				MyWindowManager.removeBigWindow(context);
+//				try {
+//					DeepCpuData.setCpuGovernor("userspace");
+//					Toast.makeText(context, "默认模式设置成功", Toast.LENGTH_SHORT)
+//							.show();
+//					// dialog.show();
+//					// new
+//					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_DEFAULT);
+//				} catch (Exception e) {
+//					// TODO: handle exception
+//				}
+//			}
+//		});
 
 		// 点击极速模式的时候切换极速模式，移除大悬浮窗，创建小悬浮窗
-		jisu.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				MyWindowManager.removeBigWindow(context);
-				try {
-					DeepCpuData.setCpuGovernor("performance");
-					Toast.makeText(context, "极速模式设置成功", Toast.LENGTH_SHORT)
-							.show();
-					// dialog.show();
-					// new
-					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_PERFORMANCE);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		});
+//		jisu.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				MyWindowManager.removeBigWindow(context);
+//				try {
+//					DeepCpuData.setCpuGovernor("performance");
+//					Toast.makeText(context, "极速模式设置成功", Toast.LENGTH_SHORT)
+//							.show();
+//					// dialog.show();
+//					// new
+//					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_PERFORMANCE);
+//				} catch (Exception e) {
+//					// TODO: handle exception
+//				}
+//			}
+//		});
 
 		// 点击省电模式的时候切换省电模式，移除大悬浮窗，创建小悬浮窗
-		shengdian.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				MyWindowManager.removeBigWindow(context);
-				try {
-					DeepCpuData.setCpuGovernor("powersave");
-					Toast.makeText(context, "省电模式设置成功", Toast.LENGTH_SHORT)
-							.show();
-					// dialog.show();
-					// new
-					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		});
+//		shengdian.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				MyWindowManager.removeBigWindow(context);
+//				try {
+//					DeepCpuData.setCpuGovernor("powersave");
+//					Toast.makeText(context, "省电模式设置成功", Toast.LENGTH_SHORT)
+//							.show();
+//					// dialog.show();
+//					// new
+//					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
+//				} catch (Exception e) {
+//					// TODO: handle exception
+//				}
+//			}
+//		});
 		
 		// 点击自定义模式的时候切换省电模式，移除大悬浮窗，创建小悬浮窗
-		zidingyi.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				MyWindowManager.removeBigWindow(context);
-				try {
-					DeepCpuData.setCpuGovernor("powersave");
-					Toast.makeText(context, "自定义模式设置成功", Toast.LENGTH_SHORT)
-							.show();
-					// dialog.show();
-					// new
-					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		});
+//		zidingyi.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				MyWindowManager.removeBigWindow(context);
+//				try {
+//					DeepCpuData.setCpuGovernor("powersave");
+//					Toast.makeText(context, "自定义模式设置成功", Toast.LENGTH_SHORT)
+//							.show();
+//					// dialog.show();
+//					// new
+//					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
+//				} catch (Exception e) {
+//					// TODO: handle exception
+//				}
+//			}
+//		});
 		
 		// 点击用户模式的时候切换省电模式，移除大悬浮窗，创建小悬浮窗
-		yonghu.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				MyWindowManager.removeBigWindow(context);
-				try {
-					DeepCpuData.setCpuGovernor("powersave");
-					Toast.makeText(context, "用户模式设置成功", Toast.LENGTH_SHORT)
-							.show();
-					// dialog.show();
-					// new
-					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		});
+//		yonghu.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				MyWindowManager.removeBigWindow(context);
+//				try {
+//					DeepCpuData.setCpuGovernor("powersave");
+//					Toast.makeText(context, "用户模式设置成功", Toast.LENGTH_SHORT)
+//							.show();
+//					// dialog.show();
+//					// new
+//					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
+//				} catch (Exception e) {
+//					// TODO: handle exception
+//				}
+//			}
+//		});
 		
 		// 点击智能模式的时候切换省电模式，移除大悬浮窗，创建小悬浮窗
-		zhineng.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				MyWindowManager.removeBigWindow(context);
-				try {
-					DeepCpuData.setCpuGovernor("powersave");
-					Toast.makeText(context, "智能模式设置成功", Toast.LENGTH_SHORT)
-							.show();
-					// dialog.show();
-					// new
-					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		});
+//		zhineng.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				MyWindowManager.removeBigWindow(context);
+//				try {
+//					DeepCpuData.setCpuGovernor("powersave");
+//					Toast.makeText(context, "智能模式设置成功", Toast.LENGTH_SHORT)
+//							.show();
+//					// dialog.show();
+//					// new
+//					// AsyncTaskSetModel().execute(MyConfig.CPUMODEL_POWERSAVE);
+//				} catch (Exception e) {
+//					// TODO: handle exception
+//				}
+//			}
+//		});
 
 		/**
 		 * 防止该界面因突发事件卡死
