@@ -107,7 +107,7 @@ public class FloatWindowService extends Service {
 				});
 			}
 
-			// 有悬浮窗显示，则更新内存数据。
+			// 有悬浮窗显示，则更新CPU数据。
 			else if (MyWindowManager.isWindowShowing()) {
 				handler.post(new Runnable() {
 					@Override
@@ -117,8 +117,6 @@ public class FloatWindowService extends Service {
 							TextView percentView = (TextView) MyWindowManager.smallWindow
 									.findViewById(R.id.percent);
 							percentView.setText(resultCPU);
-							//
-							
 						}
 						if (MyWindowManager.bigWindow != null) {
 							// 添加大悬浮窗事件
