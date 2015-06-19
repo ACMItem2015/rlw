@@ -36,7 +36,7 @@ public class DeepCpuData {
     public static boolean setCpuGovernor(String governor) {  
         DataOutputStream os = null;   
         String command = "echo " + governor + " > " + cpuFreqPath + "/scaling_governor";  
-        Log.i(TAG, "command: " + command);  
+//        Log.i(TAG, "command: " + command);  
         try {  
             Process process = Runtime.getRuntime().exec("su");  
             os = new DataOutputStream(process.getOutputStream());  
@@ -62,7 +62,7 @@ public class DeepCpuData {
     public static boolean setMinCpuFreq(long freq) {  
         DataOutputStream os = null;   
         String command = "echo " + freq + " > " + cpuFreqPath + "/scaling_min_freq";  
-        Log.i(TAG, "command: " + command);  
+//        Log.i(TAG, "command: " + command);  
         try {  
             Process process = Runtime.getRuntime().exec("su");  
             os = new DataOutputStream(process.getOutputStream());  
@@ -70,7 +70,7 @@ public class DeepCpuData {
             os.writeBytes("exit\n");  
             os.flush();  
             process.waitFor();  
-            Log.i(TAG, "exit value = " + process.exitValue());  
+//            Log.i(TAG, "exit value = " + process.exitValue());  
         } catch (IOException e) {  
             Log.i(TAG, "新的cpu频率设置失败！");  
             return false;  
@@ -89,7 +89,7 @@ public class DeepCpuData {
     public static boolean setMaxCpuFreq(long freq) {  
         DataOutputStream os = null;   
         String command = "echo " + freq + " > " + cpuFreqPath + "/scaling_max_freq";  
-        Log.i(TAG, "command: " + command);  
+//        Log.i(TAG, "command: " + command);  
         try {  
             Process process = Runtime.getRuntime().exec("su");  
             os = new DataOutputStream(process.getOutputStream());  
@@ -97,7 +97,7 @@ public class DeepCpuData {
             os.writeBytes("exit\n");  
             os.flush();  
             process.waitFor();  
-            Log.i(TAG, "exit value = " + process.exitValue());  
+//            Log.i(TAG, "exit value = " + process.exitValue());  
         } catch (IOException e) {  
             Log.i(TAG, "新的cpu频率设置失败！");  
             return false;  

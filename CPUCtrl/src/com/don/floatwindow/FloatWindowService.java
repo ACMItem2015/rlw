@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -28,6 +29,8 @@ import com.rgy.setcpu.R;
 import com.rgy.setcpu.SmartyService;
 
 public class FloatWindowService extends Service {
+	
+	String TAG = "FloatWindowService";
 
 	/**
 	 * 用于在线程中创建或移除悬浮窗。
@@ -272,25 +275,26 @@ public class FloatWindowService extends Service {
 				myApp.setCpuModel(model);
 				Toast.makeText(FloatWindowService.this, cpuModel_str + "设置成功",
 						Toast.LENGTH_SHORT).show();
+				Log.i(TAG, cpuModel_str+"设置成功");
 				// 判断MainActivity是否存在
 				if (MainActivity.tv_showmodel != null) {
 					MainActivity.tv_showmodel.setText("当前模式:\n" + cpuModel_str);
 				}
 				// 关闭 智能模式 和 自定义模式
-				if (AppUtils.isServiceWork(FloatWindowService.this,
-						MyConfig.SERVICENAME_SMARTY)) {
-					Intent intent = new Intent(FloatWindowService.this,
-							SmartyService.class);
+				String smartySwitch = myApp.getSmartySwitch();
+				String customSwitch = myApp.getCustomSwitch();
+				if (smartySwitch.equals("Start")) {
+					Intent intent = new Intent(FloatWindowService.this,SmartyService.class);
 					stopService(intent);
-				} else if (AppUtils.isServiceWork(FloatWindowService.this,
-						MyConfig.SERVICENAME_CUSTOM)) {
-					Intent intent = new Intent(FloatWindowService.this,
-							CustomService.class);
+					myApp.setSmartySwitch("Stop");
+				} else if (customSwitch.equals("Start")) {
+					Intent intent = new Intent(FloatWindowService.this,CustomService.class);
 					stopService(intent);
+					myApp.setCustomSwitch("Stop");
 				}
 			} else {
-				Toast.makeText(FloatWindowService.this, cpuModel_str + "设置失败",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(FloatWindowService.this, cpuModel_str + "设置失败",Toast.LENGTH_SHORT).show();
+				Log.i(TAG, cpuModel_str+"设置失败");
 			}
 			// //
 			super.onPostExecute(result);
