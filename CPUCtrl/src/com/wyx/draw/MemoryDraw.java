@@ -76,7 +76,7 @@ public class MemoryDraw extends WallpaperDraw{
 		c.restore();
 	}
 	
-	//-------------------------一下是读取存储数据的方法----------------------------------------
+	//------------------------以下是读取存储数据的方法----------------------------------------
 	public String getRamInfo(){
 		String usage=Formatter.formatFileSize(context,getRamSize()-getFreeRamSize());
 		String total=Formatter.formatFileSize(context,getRamSize());

@@ -96,10 +96,17 @@ public class BatteryDraw extends WallpaperDraw{
     	float mPowerXR=mBatteryXR-mStrokeWidth;
     	float mPowerYR=mBatteryYR-mStrokeWidth;
     	mPowerWidth=mPowerXR-mPowerXL;//
-    	mPower=mPowerWidth*(1-level/100f);//
+    	mPower=mPowerWidth*(1-level/100f);//根据电池Info，计算电量
     	mPowerXL+=mPower;//
     	RectF mPowerRectF=new RectF(mPowerXL,mPowerYL,mPowerXR,mPowerYR);
-    	
+    	/**
+    	 * 设置电池盖
+    	 */
+    	float mCapXL=0;
+    	float mCapYL=(mBatteryYR-mCapHeight)/2f;
+    	float mCapXR=mCapWidth;
+    	float mCapYR=mCapYL+mCapHeight;
+    	RectF mCapRectF=new RectF(mCapXL, mCapYL, mCapXR, mCapYR);
     	/**
     	 * 当电量小于10，变为红色
     	 */
@@ -115,7 +122,7 @@ public class BatteryDraw extends WallpaperDraw{
     	c.drawText(temStr, 0, infoY2, mPaint);
     	
     	mBatteryPaint.setStyle(Style.FILL);//画电池盖的时候改一下Style
-    	c.drawRoundRect(new RectF(0,(mBatteryYR-mCapHeight)/2,mCapWidth,(mBatteryYR-mCapHeight)/2+mCapHeight),2f,2f,mBatteryPaint);
+    	c.drawRoundRect(mCapRectF,2f,2f,mBatteryPaint);
     	c.drawRect(mPowerRectF,mPowerPaint);
     	c.restore();
 	}

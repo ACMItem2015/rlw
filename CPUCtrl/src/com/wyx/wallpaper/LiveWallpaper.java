@@ -25,6 +25,7 @@ import com.wyx.draw.TimeDraw;
 import com.wyx.util.BatteryChangeReceiver;
 
 public class LiveWallpaper extends WallpaperService {
+	private final Handler mHandler=new Handler();
 	
 	@Override
 	public void onCreate() {
@@ -49,6 +50,13 @@ public class LiveWallpaper extends WallpaperService {
 	 *
 	 */
 	class LiveWallpaperEngine extends Engine{
+		
+		private final Runnable mRun=new Runnable() {
+			@Override
+			public void run() {
+				drawWallpaper();
+			}
+		};
 		
 		private Paint mPaint=new Paint();
 		private Canvas c;
@@ -94,7 +102,7 @@ public class LiveWallpaper extends WallpaperService {
 			timer.schedule(new TimerTask() {//开定时器刷新，解决跳秒问题！！！
 				@Override
 				public void run() {
-					drawWallpaper();//mHandler.post(mRun);mHandler貌似可以取消了
+					mHandler.post(mRun);//定时启动handler
 				}
 			},0,1000);
             
@@ -119,6 +127,8 @@ public class LiveWallpaper extends WallpaperService {
 			super.onVisibilityChanged(visible);
 			if(visible){
 				drawWallpaper();
+			}else{
+				mHandler.removeCallbacks(mRun);
 			}
 			Log.w("LiveWallpaper.Engine", "onVisibilityChanged");
 		}
@@ -137,6 +147,7 @@ public class LiveWallpaper extends WallpaperService {
 			
 			unregisterReceiver(mBroadcastReceiver);//关闭广播
 			
+			mHandler.removeCallbacks(mRun);
 			timer.cancel();//关闭定时器
 		}
 		
@@ -146,13 +157,15 @@ public class LiveWallpaper extends WallpaperService {
 			final SurfaceHolder holder = getSurfaceHolder();
 			try{
 				c=holder.lockCanvas();
+				int width=c.getWidth();
+            	int height=c.getHeight();
 				if(c!=null){
 					
 					Resources res=getResources();
                 	Bitmap bmp=BitmapFactory.decodeResource(res,R.drawable.wallpaper4);
                 	c.drawBitmap(bmp,-50,-200,mPaint);//坐标需要算一算
 					
-                	c.translate(40, 80);//
+                	c.translate((width-640)/2,(height-920)/2-height/14);//-100
                 	Log.w("LiveWallpaper.Engine", "start-----------drawTime");
 					drawTime();
 					Log.w("LiveWallpaper.Engine", "start-----------drawCpuFreq");
