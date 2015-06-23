@@ -45,11 +45,6 @@ public class CpuUsageDraw extends WallpaperDraw{
 	public void draw(){
 
 		int result=cpuUsage/10;
-		
-		if(result<=1){//解决小于10，画出来为空的情况
-			result=1;
-		}
-
 		usageList.add(0,result);//CPU使用率的历史数据
 		
 		//绘制每一格使用率的画笔
@@ -70,6 +65,10 @@ public class CpuUsageDraw extends WallpaperDraw{
 		c.drawRoundRect(new RectF(0,10f,60f,210f),3f,3f,recfPaint);
 		
 		for(int i=0;i<result;i++){
+			if(result<=1){
+				c.drawLine(0, 180,60,180,linePaint);
+				break;
+			}
 			c.drawLine(0,200-i*20,60,200-i*20,linePaint);
 		}
 		

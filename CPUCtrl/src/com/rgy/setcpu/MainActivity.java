@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.don.floatwindow.FloatWindowService;
 import com.don.floatwindow.SetActivity;
 import com.rgy.Tools.AppUtils;
 import com.rgy.Tools.DeepCpuData;
@@ -29,12 +31,14 @@ import com.rgy.widget.MyProgressDialog;
 
 public class MainActivity extends Activity {
 	
+	String TAG = "MainActivity";
+	
 	MyApplication myApp;
 	ProgressDialog dialog;
 	
 	static Button btn_floatwin;//开启悬浮窗的按钮
 	TextView tv_showfreq;
-	static TextView tv_showmodel;
+	public static TextView tv_showmodel;
 	ImageButton btn_powersave,btn_performance,btn_defaultModel,btn_userModel;
 
 	ImageButton btn_custom, btn_smart;
@@ -258,17 +262,23 @@ public class MainActivity extends Activity {
 			if(state.equals("ok")){
 				myApp.setCpuModel(model);
 				Toast.makeText(MainActivity.this, cpuModel_str+"设置成功", Toast.LENGTH_SHORT).show();
+				Log.i(TAG, cpuModel_str+"设置成功");
 				tv_showmodel.setText("当前模式:\n"+ cpuModel_str);
 				//关闭 智能模式 和 自定义模式
-				if(AppUtils.isServiceWork(MainActivity.this, MyConfig.SERVICENAME_SMARTY)){
+				String smartySwitch = myApp.getSmartySwitch();
+				String customSwitch = myApp.getCustomSwitch();
+				if(smartySwitch.equals("Start")){
 					Intent intent = new Intent(MainActivity.this, SmartyService.class);
 					stopService(intent);
-				}else if(AppUtils.isServiceWork(MainActivity.this, MyConfig.SERVICENAME_CUSTOM)){
+					myApp.setSmartySwitch("Stop");
+				}else if(customSwitch.equals("Start")){
 					Intent intent = new Intent(MainActivity.this, CustomService.class);
 					stopService(intent);
+					myApp.setCustomSwitch("Stop");
 				}
 			}else{
 				Toast.makeText(MainActivity.this, cpuModel_str+"设置失败", Toast.LENGTH_SHORT).show();
+				Log.i(TAG, cpuModel_str+"设置失败");
 			}
 			////
 			super.onPostExecute(result);

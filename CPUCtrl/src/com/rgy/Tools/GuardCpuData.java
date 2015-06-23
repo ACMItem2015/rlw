@@ -15,7 +15,7 @@ public class GuardCpuData {
 	public static String getCpuUsage(){
 		String result = "";
 		try {
-			Process p = Runtime.getRuntime().exec("top -n 1 -d 0");//改变CPU使用率的读取频率
+			Process p = Runtime.getRuntime().exec("top -n 1 -d 0");
 			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((result = br.readLine()) != null) {
 				if (result.trim().length() < 1) {

@@ -25,6 +25,7 @@ import com.wyx.draw.TimeDraw;
 import com.wyx.util.BatteryChangeReceiver;
 
 public class LiveWallpaper extends WallpaperService {
+
 	private final Handler mHandler=new Handler();
 	
 	@Override
@@ -50,7 +51,7 @@ public class LiveWallpaper extends WallpaperService {
 	 *
 	 */
 	class LiveWallpaperEngine extends Engine{
-		
+		//画桌面的线程
 		private final Runnable mRun=new Runnable() {
 			@Override
 			public void run() {
@@ -111,6 +112,7 @@ public class LiveWallpaper extends WallpaperService {
 		@Override
 		public void onSurfaceCreated(SurfaceHolder holder) {//创建的时候运行
 			super.onSurfaceCreated(holder);
+			//mHandler.removeCallbacks(mRun);
 			Log.w("LiveWallpaper.Engine", "onSurfaceCreated");
 		}
 		
@@ -128,7 +130,7 @@ public class LiveWallpaper extends WallpaperService {
 			if(visible){
 				drawWallpaper();
 			}else{
-				mHandler.removeCallbacks(mRun);
+				mHandler.removeCallbacks(mRun);//将线程从线程队列中移除
 			}
 			Log.w("LiveWallpaper.Engine", "onVisibilityChanged");
 		}
@@ -136,6 +138,7 @@ public class LiveWallpaper extends WallpaperService {
 		@Override
 		public void onSurfaceDestroyed(SurfaceHolder holder) {
 			super.onSurfaceDestroyed(holder);
+			mHandler.removeCallbacks(mRun);//将线程从线程队列中移除
 			Log.w("LiveWallpaper.Engine", "onSurfaceDestroyed");
 			
 		}
@@ -143,6 +146,7 @@ public class LiveWallpaper extends WallpaperService {
 		@Override
 		public void onDestroy() {
 			super.onDestroy();
+			mHandler.removeCallbacks(mRun);//将线程从线程队列中移除
 			Log.w("LiveWallpaper.Engine", "onDestroy");
 			
 			unregisterReceiver(mBroadcastReceiver);//关闭广播
@@ -182,6 +186,7 @@ public class LiveWallpaper extends WallpaperService {
 					holder.unlockCanvasAndPost(c);
 				}
 			}
+			mHandler.postDelayed(mRun,1000);//将线程添加到线程队列中，一秒执行一次
 			Log.w("LiveWallpaper.Engine", "drawWallpaper");
 		}
 		

@@ -2,20 +2,30 @@ package com.don.floatwindow.view;
 
 import java.lang.reflect.Field;
 
-import com.don.floatwindow.FloatWindowService;
-import com.rgy.setcpu.R;
-import com.don.floatwindow.utils.MyWindowManager;
-
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.don.floatwindow.FloatWindowService;
+import com.don.floatwindow.utils.MyWindowManager;
+import com.rgy.Tools.DeepCpuData;
+import com.rgy.Tools.MyConfig;
+import com.rgy.Tools.SmallUtils;
+import com.rgy.setcpu.CustomService;
+import com.rgy.setcpu.MainActivity;
+import com.rgy.setcpu.MyApplication;
+import com.rgy.setcpu.R;
+import com.rgy.setcpu.SmartyService;
 
 public class FloatWindowSmallView extends LinearLayout {
 
@@ -75,16 +85,26 @@ public class FloatWindowSmallView extends LinearLayout {
 	private float yInView;
 	private View view;
 	private TextView percentView;
+	
+	//rgy
+	
+	MyApplication myApp;
+	
+	String TAG = "FloatWindowSmallView";
+	
+	Context context;
 
 	public FloatWindowSmallView(Context context) {
 		super(context);
+		this.context = context;
 		windowManager = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);
 		LayoutInflater.from(context).inflate(R.layout.float_window_small, this);
 
 		initView();
-
 		percentView.setText(FloatWindowService.resultCPU);
+		//
+		myApp = (MyApplication) this.context.getApplicationContext();
 	}
 
 	private void initView() {
@@ -95,7 +115,6 @@ public class FloatWindowSmallView extends LinearLayout {
 
 	}
 
-	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
@@ -150,6 +169,9 @@ public class FloatWindowSmallView extends LinearLayout {
 					MyWindowManager.removeRocketWindow1(getContext());
 					MyWindowManager.createRocketWindow2(getContext());
 					MyWindowManager.reCreateSmallWindow(getContext());
+
+					//此处填加小火箭事件!!(RGY) 极速模式
+					new AsyncTaskSetModel().execute(MyConfig.CPUMODEL_PERFORMANCE);
 				}
 
 			}
@@ -222,4 +244,68 @@ public class FloatWindowSmallView extends LinearLayout {
 		}
 		return statusBarHeight;
 	}
+	
+	class AsyncTaskSetModel extends AsyncTask<String, Integer, String> {
+		@Override
+		protected String doInBackground(String... params) {
+			String model = params[0];
+			long max = Long.parseLong(myApp.getcpuMaxFreq());
+			long min = Long.parseLong(myApp.getcpuMinFreq());
+			boolean flag1 = DeepCpuData.setMaxCpuFreq(max);
+			boolean flag2 = DeepCpuData.setMinCpuFreq(min);
+			boolean flag = false;
+			if (model.equals(MyConfig.CPUMODEL_POWERSAVE)) {
+				flag = DeepCpuData.setCpuGovernor("powersave");
+			} else if (model.equals(MyConfig.CPUMODEL_PERFORMANCE)) {
+				flag = DeepCpuData.setCpuGovernor("performance");
+			} else if (model.equals(MyConfig.CPUMODEL_DEFAULT)) {
+				flag = DeepCpuData.setCpuGovernor("userspace");
+			}
+
+			String result = "";
+			if (flag && flag1 && flag2) {
+				result = "ok" + model;
+			}
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result.equals("")) {
+				Toast.makeText(context, "请先获取root权限",Toast.LENGTH_SHORT).show();
+				return;
+			}
+			String state = result.substring(0, 2);
+			String model = result.substring(2);
+			String cpuModel_str = SmallUtils.convertCpuModelName(model);
+			if (state.equals("ok")) {
+				myApp.setCpuModel(model);
+				Toast.makeText(context, cpuModel_str + "设置成功",
+						Toast.LENGTH_SHORT).show();
+				Log.i(TAG, cpuModel_str+"设置成功");
+				// 判断MainActivity是否存在
+				if (MainActivity.tv_showmodel != null) {
+					MainActivity.tv_showmodel.setText("当前模式:\n" + cpuModel_str);
+				}
+				// 关闭 智能模式 和 自定义模式
+				String smartySwitch = myApp.getSmartySwitch();
+				String customSwitch = myApp.getCustomSwitch();
+				if (smartySwitch.equals("Start")) {
+					Intent intent = new Intent(context,SmartyService.class);
+					context.stopService(intent);
+					myApp.setSmartySwitch("Stop");
+				} else if (customSwitch.equals("Start")) {
+					Intent intent = new Intent(context,CustomService.class);
+					context.stopService(intent);
+					myApp.setCustomSwitch("Stop");
+				}
+			} else {
+				Toast.makeText(context, cpuModel_str + "设置失败",Toast.LENGTH_SHORT).show();
+				Log.i(TAG, cpuModel_str+"设置失败");
+			}
+			// //
+			super.onPostExecute(result);
+		}
+	}
+	
 }

@@ -57,12 +57,12 @@ public class MySimpleAdapter extends BaseAdapter {
 		// 为ImageView和TextView控件设置显示效果
 		for (int i = 0; i < to.length; i++) {
 			if (convertView.findViewById(to[i]) instanceof ImageView) {
-				ImageView imageView = (ImageView) convertView
-						.findViewById(to[i]);
-				// 获得数据源中，对应该列的数据项
+//				ImageView imageView = (ImageView) convertView
+//						.findViewById(to[i]);
+//				// 获得数据源中，对应该列的数据项
 				Map<String, Object> item = data.get(position);
-				// 设置imageView为对应的图像
-				imageView.setBackgroundResource((Integer) item.get(from[i]));
+//				// 设置imageView为对应的图像
+//				imageView.setBackgroundResource((Integer) item.get(from[i]));
 			} else if (convertView.findViewById(to[i]) instanceof TextView) {
 				TextView textView = (TextView) convertView.findViewById(to[i]);
 				// 获得数据源中，对应该列的数据项
