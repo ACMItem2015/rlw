@@ -66,7 +66,6 @@ public class CpuUsageView extends View {
 	@Override
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
-//		Log.w("Wallpaper","removeCallbacks(mRun)");
 		removeCallbacks(mRun);
 	}
 	
@@ -79,8 +78,10 @@ public class CpuUsageView extends View {
 		//获取CPU利用率
 		String str_cpuUsage = MyApplication.cpuCurUsage;
 		int cpuUsage = Integer.parseInt(str_cpuUsage.substring(0, str_cpuUsage.length()-1));
-//		System.out.println("cpu占用率："+cpuUsage);
 		int result=cpuUsage/10;
+		if(result<=1){//小于10%时画一格
+			result=1;
+		}
 		
 		//使用Handler给MainActivity发送msg
 		Message msg=new Message();
@@ -93,14 +94,9 @@ public class CpuUsageView extends View {
 		//将历史记录保存在list中，绘图时需要
 		list.add(0,result);
 
-//		Log.w("Wallpaper",result+"");
-		
-//		canvas.drawLine(0,measureHeigth,measureWidth,measureHeigth,mPaint1);
 		//开始绘图
 		canvas.save();
 		canvas.translate((measureWidth-(50f*12f+13f*10f))/2f,(measureHeigth-435f)/2f);//居中
-		//Log.w("Wallpaper",measureWidth+"");
-		//Log.w("Wallpaper",measureHeigth+"");
 		
 		for(int i=0;i<list.size();i++){
 			for(int j=0;j<list.get(i);j++){

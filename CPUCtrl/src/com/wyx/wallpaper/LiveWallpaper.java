@@ -16,6 +16,7 @@ import android.service.wallpaper.WallpaperService;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.rgy.setcpu.MyApplication;
 import com.rgy.setcpu.R;
 import com.wyx.draw.BatteryDraw;
 import com.wyx.draw.CpuFreqDraw;
@@ -74,6 +75,7 @@ public class LiveWallpaper extends WallpaperService {
 		
 		private ArrayList<String> freqList=new ArrayList<String>();
 		private ArrayList<Integer> usageList=new ArrayList<Integer>();
+		
 	//-----------以上都是变量------------------------------------------	
 		
 		public LiveWallpaperEngine(){
@@ -88,6 +90,7 @@ public class LiveWallpaper extends WallpaperService {
 			mPaint.setStrokeWidth(2);
 			mPaint.setStrokeCap(Paint.Cap.ROUND);
 			mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+			
 		}
 		
 		@Override
@@ -186,7 +189,6 @@ public class LiveWallpaper extends WallpaperService {
 					holder.unlockCanvasAndPost(c);
 				}
 			}
-			mHandler.postDelayed(mRun,1000);//将线程添加到线程队列中，一秒执行一次
 			Log.w("LiveWallpaper.Engine", "drawWallpaper");
 		}
 		

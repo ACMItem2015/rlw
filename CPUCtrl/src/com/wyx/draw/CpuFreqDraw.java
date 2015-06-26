@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import com.rgy.Tools.DeepCpuData;
+import com.rgy.Tools.SmallUtils;
 import com.rgy.setcpu.MyApplication;
 
 /**
@@ -43,8 +44,6 @@ public class CpuFreqDraw extends WallpaperDraw{
 			public void run() {
 				//new CpuFreqAsyncTask().execute();
 				curCpuFreq = MyApplication.cpuCurFreq;
-				//System.out.println("当前频率："+curCpuFreq);
-				//Log.w("LiveWallpaper.Engine", "CpuFreq_TimerTask");
 			}
 		}, 0, 1000);
 	}
@@ -66,18 +65,18 @@ public class CpuFreqDraw extends WallpaperDraw{
     	String data="";
     	Log.w("LiveWallpaper.Engine", "data = cpuFreqTask.get() before");
 		
-		data = curCpuFreq;//GuardCpuData.getCurCpuFreq();//cpuFreqTask.getCurCpuFreq();
+		data = curCpuFreq;
 		
 		Log.w("LiveWallpaper.Engine", data);
     	String data1="CPU频率："+data+"KHz";
-    	//String data2="GPU频率："+GuardCpuData.getGpuCurFreq()+"KHz";//GPU数据
+    	String data2="当前模式："+SmallUtils.convertCpuModelName(MyApplication.cpuModel); 
     	
     	freqList.add(0,data);
     	
     	mPaint.setTextSize(25);
         c.translate(0, 200);//可要可不要mCenterX,mCenterY
-        c.drawText(data1,0,0,mPaint);//????????????/
-        //c.drawText(data2,0,30,mPaint);
+        c.drawText(data1,0,0,mPaint);//画字符串CPU频率
+        c.drawText(data2,0,30,mPaint);//画字符串当前模式
         
         c.drawLine(0,40,0,height,mPaint);//360原来是freqH
       
