@@ -15,7 +15,7 @@ import com.rgy.entity.AppInfo;
 
 public class MyApplication extends Application {
 
-	private String cpuModel;
+	public static String cpuModel;
 	
 	private String cpuMaxFreq,cpuMinFreq;
 	
